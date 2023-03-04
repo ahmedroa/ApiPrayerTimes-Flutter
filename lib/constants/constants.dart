@@ -6,7 +6,7 @@ const kSecondaryColor = Color(0xFFfcca46);
 const kTextColor = Color(0xFF29445d);
 const kTextLightColor = Color(0xFF747474);
 const kBlueColor = Color(0xff4c53a5);
-const DarkColor = Color(0xff42506b);
+const DarkColor = Color(0xff051736);
 
 const kDefaultPadding = 20.0;
 Widget size = SizedBox(

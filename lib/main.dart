@@ -1,7 +1,7 @@
 import 'package:azan/bloc/cubit.dart';
 import 'package:azan/bloc/states.dart';
 import 'package:azan/constants/constants.dart';
-import 'package:azan/screens/home.dart';
+import 'package:azan/layout/screens/home.dart';
 import 'package:azan/shared/bloc_observer.dart';
 import 'package:azan/shared/network/dio.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
               supportedLocales: [Locale("ar", "AE")],
               locale: Locale("ar", "AE"),
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
               darkTheme: ThemeData(
                   scaffoldBackgroundColor: DarkColor,
                   appBarTheme: AppBarTheme(
@@ -56,7 +55,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 scaffoldBackgroundColor: kBackgroundColor,
                 appBarTheme: AppBarTheme(
-                    iconTheme: IconThemeData(color: Colors.black),
+                    iconTheme: IconThemeData(color: kTextColor),
                     backwardsCompatibility: false,
                     systemOverlayStyle: SystemUiOverlayStyle(
                       statusBarColor: kBackgroundColor,
