@@ -33,7 +33,7 @@ class prayer extends StatelessWidget {
                             child: Column(
                           children: [
                             Text(
-                              "45 : 11",
+                              "10 : 9",
                               style: TextStyle(
                                 color: kTextColor,
                                 fontSize: 36,
@@ -41,7 +41,7 @@ class prayer extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "3 مارس , الجمعة",
+                              "4 مارس , الجمعة",
                               style: TextStyle(
                                 color: kTextColor,
                                 fontSize: 20,
@@ -49,7 +49,7 @@ class prayer extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "11 شبعان 1444هـ",
+                              "12 شبعان 1444هـ",
                               style: TextStyle(
                                 color: kTextColor,
                                 fontSize: 20,
@@ -64,7 +64,7 @@ class prayer extends StatelessWidget {
                                   color: kTextColor,
                                 ),
                                 Text(
-                                  "مكة المكرمة ",
+                                  "${AlahdanCubit.get(context).district}",
                                   style: TextStyle(
                                     color: kTextColor,
                                     fontSize: 20,

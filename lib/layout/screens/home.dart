@@ -5,6 +5,7 @@ import 'package:azan/layout/widgets/prayer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class home extends StatelessWidget {
   const home({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 AlahdanCubit.get(context).changeAppMode();
               },
               icon: Icon(Icons.brightness_4_outlined)),
@@ -31,7 +32,7 @@ class home extends StatelessWidget {
         elevation: 0.0,
       ),
       body: BlocProvider(
-          create: (BuildContext context) => AlahdanCubit()..getData(),
+          create: (BuildContext context) => AlahdanCubit()..getPermission(),
           child: BlocConsumer<AlahdanCubit, AlahdanStates>(
               listener: (context, state) {},
               builder: (context, state) {
