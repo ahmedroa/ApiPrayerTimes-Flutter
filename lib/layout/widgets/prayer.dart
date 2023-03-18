@@ -3,13 +3,12 @@ import 'package:azan/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class prayer extends StatelessWidget {
-  const prayer({
-    Key? key,
-  }) : super(key: key);
+  const prayer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var cubit = AlahdanCubit.get(context).prayerTimes;
+    var cubit = AlahdanCubit.get(context);
+
     return Column(
       children: [
         Container(
@@ -64,7 +63,7 @@ class prayer extends StatelessWidget {
                                   color: kTextColor,
                                 ),
                                 Text(
-                                  "${AlahdanCubit.get(context).district}",
+                                  "${AlahdanCubit.get(context).cityS}",
                                   style: TextStyle(
                                     color: kTextColor,
                                     fontSize: 20,
@@ -84,19 +83,13 @@ class prayer extends StatelessWidget {
           ),
         ),
         size,
-        buildPrayerTimes(time: '${cubit?.fajr}', prayer: 'الفجر'),
-        size,
-        buildPrayerTimes(time: '${cubit?.sunset}', prayer: 'الشروق'),
-        size,
-        buildPrayerTimes(time: '${cubit?.dhuhr}', prayer: 'الظهر'),
-        size,
-        buildPrayerTimes(time: '${cubit?.asr}', prayer: 'العصر'),
-        size,
-        buildPrayerTimes(time: '${cubit?.sunset}', prayer: 'الغروب'),
-        size,
-        buildPrayerTimes(time: '${cubit?.maghrib}', prayer: 'المغرب'),
-        size,
-        buildPrayerTimes(time: '${cubit?.isha}', prayer: 'العشاء'),
+        buildPrayerTimes(time: '${cubit.fajr}', prayer: 'الفجر'),
+        buildPrayerTimes(time: '${cubit.sunrise}', prayer: 'الشروق'),
+        buildPrayerTimes(time: '${cubit.dhuhr}', prayer: 'الظهر'),
+        buildPrayerTimes(time: '${cubit.asr}', prayer: 'العصر'),
+        buildPrayerTimes(time: '${cubit.sunset}', prayer: 'الغروب'),
+        buildPrayerTimes(time: '${cubit.maghrib}', prayer: 'المغرب'),
+        buildPrayerTimes(time: '${cubit.isha}', prayer: 'العشاء'),
       ],
     );
   }

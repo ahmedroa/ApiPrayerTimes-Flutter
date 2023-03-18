@@ -1,11 +1,8 @@
 import 'package:azan/bloc/cubit.dart';
 import 'package:azan/bloc/states.dart';
-import 'package:azan/constants/constants.dart';
 import 'package:azan/layout/widgets/prayer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 
 class home extends StatelessWidget {
   const home({Key? key}) : super(key: key);
@@ -15,11 +12,20 @@ class home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () async {
-                AlahdanCubit.get(context).changeAppMode();
-              },
-              icon: Icon(Icons.brightness_4_outlined)),
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () async {
+                    AlahdanCubit.get(context).getPermission();
+                  },
+                  icon: Icon(Icons.location_on_outlined)),
+              IconButton(
+                  onPressed: () async {
+                    AlahdanCubit.get(context).changeAppMode();
+                  },
+                  icon: Icon(Icons.brightness_4_outlined)),
+            ],
+          ),
         ],
         title: Text(
           'أوقات الصلاة ',
@@ -36,9 +42,11 @@ class home extends StatelessWidget {
           child: BlocConsumer<AlahdanCubit, AlahdanStates>(
               listener: (context, state) {},
               builder: (context, state) {
-                return Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: prayer(),
+                return ListView(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(14.0), child: prayer()),
+                  ],
                 );
               })),
     );
