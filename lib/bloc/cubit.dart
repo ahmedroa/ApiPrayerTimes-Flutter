@@ -1,12 +1,13 @@
-import 'dart:js';
-
 import 'package:azan/bloc/states.dart';
+import 'package:azan/constants/constants.dart';
 import 'package:azan/models/date_model.dart';
 import 'package:azan/models/preyer_time.dart';
 import 'package:azan/shared/helper/cachHelper.dart';
 import 'package:azan/shared/network/dio.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -25,10 +26,25 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   var lat;
   var lang;
   Position? cl;
-  PrayerTimes? prayerTimes;
-  DateModel? dateModel;
+
   bool isDark = false;
   List<Placemark> placemarks = [];
+  checkInternet() async {
+    ConnectivityResult connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      getPermission();
+    } else if (connectivityResult == ConnectivityResult.none) {
+      Fluttertoast.showToast(
+        msg: 'تحقق من اتصال الانترنت',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 
   changeAppMode() {
     isDark = !isDark;
@@ -36,6 +52,7 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   }
 
   getPermission() async {
+    emit(AladanPrayerTimeLoadingState());
     LocationPermission? per;
 
     late bool services;
@@ -53,6 +70,15 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   }
 
   getLatAndLong() async {
+    Fluttertoast.showToast(
+      msg: 'جاري تحديث الموقع ...',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      // timeInSecForIosWeb: 1,
+      backgroundColor: kTextColor,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     cl = await Geolocator.getCurrentPosition().then((value) => value);
     lat = cl!.latitude;
     lang = cl!.longitude;
@@ -73,21 +99,10 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
 
   var cityS = cachHelper.getDate(key: 'city');
   var countrS = cachHelper.getDate(key: 'administrativeArea');
-  loding() {
-    const snackdemo = SnackBar(
-      content: Text('Hii this is GFG\'s SnackBar'),
-      backgroundColor: Colors.green,
-      elevation: 10,
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.all(5),
-    );
-    // ignore: deprecated_member_use
-    // Scaffold.of(context).showSnackBar(snackdemo);
-  }
-
   void getData() {
     emit(AladanPrayerTimeLoadingState());
-    circularProgressIndicator();
+    PrayerTimes? prayerTimes;
+    DateModel? dateModel;
     DioHelper.getData(
       url: 'v1/timingsByCity',
       query: {
@@ -112,14 +127,17 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
           key: 'Sunset', value: value.data['data']['timings']['Sunset']);
       cachHelper.saveDate(
           key: 'Isha', value: value.data['data']['timings']['Isha']);
-      loding();
+      Fluttertoast.showToast(
+        msg: 'تم تحديد الموقع على ${cityS}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        // timeInSecForIosWeb: 1,
+        backgroundColor: kTextColor,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }).catchError((error) {
       emit(AladanPrayerTimeErrorState(error));
-      print(error.toString());
     });
   }
-}
-
-circularProgressIndicator() {
-  CircularProgressIndicator();
 }
