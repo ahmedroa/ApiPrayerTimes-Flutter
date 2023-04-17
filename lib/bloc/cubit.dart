@@ -33,7 +33,7 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
     ConnectivityResult connectivityResult =
         await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
-      getPermission();
+      await getPermission();
     } else if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(
         msg: 'تحقق من اتصال الانترنت',
@@ -65,13 +65,20 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
       } else {
         await getLatAndLong();
       }
+      if (per == LocationPermission.always) {
+        per = await getLatAndLong();
+      }
+      if (per == LocationPermission.whileInUse) {
+        per = await getLatAndLong();
+      }
     }
-    getLatAndLong();
+    await getLatAndLong();
   }
 
   getLatAndLong() async {
     Fluttertoast.showToast(
       msg: 'جاري تحديث الموقع ...',
+
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       // timeInSecForIosWeb: 1,
@@ -82,7 +89,7 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
     cl = await Geolocator.getCurrentPosition().then((value) => value);
     lat = cl!.latitude;
     lang = cl!.longitude;
-    getcountry();
+    await getcountry();
   }
 
   var administrativeArea;
@@ -94,26 +101,33 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
     cachHelper.saveDate(key: 'city', value: '$country');
     cachHelper.saveDate(
         key: 'administrativeArea', value: '$administrativeArea');
-    getData();
+    await getData();
   }
 
-  var cityS = cachHelper.getDate(key: 'city');
-  var countrS = cachHelper.getDate(key: 'administrativeArea');
-  void getData() {
+  var cityS;
+  var countrS;
+  PrayerTimes? prayerTimes;
+  var xxxx;
+  getData() async {
+    var city = cachHelper.getDate(key: 'city');
+    var countrS = cachHelper.getDate(key: 'administrativeArea');
+    print(city);
+    print('========================');
+    print(countrS);
     emit(AladanPrayerTimeLoadingState());
-    PrayerTimes? prayerTimes;
+
     DateModel? dateModel;
-    DioHelper.getData(
+    await DioHelper.getData(
       url: 'v1/timingsByCity',
       query: {
-        'city': '$cityS',
+        'city': '$city',
         'country': '$countrS',
       },
     ).then((value) {
       emit(AladanPrayerTimeSuccessState());
 
       prayerTimes = PrayerTimes.fromJson(value.data['data']['timings']);
-      cachHelper.saveDate(
+      xxxx = cachHelper.saveDate(
           key: 'Fajr', value: value.data['data']['timings']['Fajr']);
       cachHelper.saveDate(
           key: 'Sunrise', value: value.data['data']['timings']['Sunrise']);
@@ -128,7 +142,7 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
       cachHelper.saveDate(
           key: 'Isha', value: value.data['data']['timings']['Isha']);
       Fluttertoast.showToast(
-        msg: 'تم تحديد الموقع على ${cityS}',
+        msg: 'تم تحديد الموقع على ${city}',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         // timeInSecForIosWeb: 1,

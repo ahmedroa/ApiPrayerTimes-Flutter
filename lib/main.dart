@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AlahdanCubit(),
+      create: (BuildContext context) => AlahdanCubit()..getPermission(),
       child: BlocConsumer<AlahdanCubit, AlahdanStates>(
           listener: (context, state) {},
           builder: (context, state) {

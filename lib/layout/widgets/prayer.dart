@@ -63,7 +63,7 @@ class prayer extends StatelessWidget {
                                   color: kTextColor,
                                 ),
                                 Text(
-                                  "${AlahdanCubit.get(context).cityS}",
+                                  "${AlahdanCubit.get(context).city}",
                                   style: TextStyle(
                                     color: kTextColor,
                                     fontSize: 20,
