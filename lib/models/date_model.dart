@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class DateModel {
   final String readable;
   final String dayHijri;

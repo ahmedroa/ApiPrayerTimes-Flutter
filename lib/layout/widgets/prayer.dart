@@ -2,8 +2,8 @@ import 'package:azan/bloc/cubit.dart';
 import 'package:azan/constants/constants.dart';
 import 'package:flutter/material.dart';
 
-class prayer extends StatelessWidget {
-  const prayer({Key? key}) : super(key: key);
+class Prayer extends StatelessWidget {
+  const Prayer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,17 @@
 import 'package:azan/bloc/cubit.dart';
 import 'package:azan/bloc/states.dart';
-import 'package:azan/constants/constants.dart';
 import 'package:azan/layout/screens/home.dart';
 import 'package:azan/shared/bloc_observer.dart';
 import 'package:azan/shared/helper/cachHelper.dart';
 import 'package:azan/shared/network/dio.dart';
 import 'package:azan/themes/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await cachHelper.init();
+  await CachHelper.init();
   Bloc.observer = MyBlocObserver();
   DioHelper.inIt();
 

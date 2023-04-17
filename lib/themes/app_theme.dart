@@ -6,7 +6,7 @@ ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: DarkColor,
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: Colors.white),
-        backwardsCompatibility: false,
+        // backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Color(0xff6a737b),
           statusBarIconBrightness: Brightness.light,
@@ -25,7 +25,7 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: kBackgroundColor,
   appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: kTextColor),
-      backwardsCompatibility: false,
+      // backwardsCompatibility: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: kBackgroundColor,
         statusBarIconBrightness: Brightness.dark,

@@ -1,6 +1,5 @@
 import 'package:azan/bloc/states.dart';
 import 'package:azan/constants/constants.dart';
-import 'package:azan/models/date_model.dart';
 import 'package:azan/models/preyer_time.dart';
 import 'package:azan/shared/helper/cachHelper.dart';
 import 'package:azan/shared/network/dio.dart';
@@ -15,14 +14,14 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   AlahdanCubit() : super(AlahadnInitialState());
 
   static AlahdanCubit get(context) => BlocProvider.of(context);
-  var city = cachHelper.getDate(key: 'city');
-  var fajr = cachHelper.getDate(key: 'Fajr');
-  var sunrise = cachHelper.getDate(key: 'Sunrise');
-  var asr = cachHelper.getDate(key: 'Asr');
-  var dhuhr = cachHelper.getDate(key: 'Dhuhr');
-  var maghrib = cachHelper.getDate(key: 'Maghrib');
-  var sunset = cachHelper.getDate(key: 'Sunset');
-  var isha = cachHelper.getDate(key: 'Isha');
+  var city = CachHelper.getDate(key: 'city');
+  var fajr = CachHelper.getDate(key: 'Fajr');
+  var sunrise = CachHelper.getDate(key: 'Sunrise');
+  var asr = CachHelper.getDate(key: 'Asr');
+  var dhuhr = CachHelper.getDate(key: 'Dhuhr');
+  var maghrib = CachHelper.getDate(key: 'Maghrib');
+  var sunset = CachHelper.getDate(key: 'Sunset');
+  var isha = CachHelper.getDate(key: 'Isha');
   var lat;
   var lang;
   Position? cl;
@@ -78,7 +77,6 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   getLatAndLong() async {
     Fluttertoast.showToast(
       msg: 'جاري تحديث الموقع ...',
-
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       // timeInSecForIosWeb: 1,
@@ -98,8 +96,8 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
     placemarks = await placemarkFromCoordinates(cl!.latitude, cl!.longitude);
     country = placemarks[0].country;
     administrativeArea = placemarks[0].administrativeArea;
-    cachHelper.saveDate(key: 'city', value: '$country');
-    cachHelper.saveDate(
+    CachHelper.saveDate(key: 'city', value: '$country');
+    CachHelper.saveDate(
         key: 'administrativeArea', value: '$administrativeArea');
     await getData();
   }
@@ -107,16 +105,15 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
   var cityS;
   var countrS;
   PrayerTimes? prayerTimes;
-  var xxxx;
+
   getData() async {
-    var city = cachHelper.getDate(key: 'city');
-    var countrS = cachHelper.getDate(key: 'administrativeArea');
+    var city = CachHelper.getDate(key: 'city');
+    var countrS = CachHelper.getDate(key: 'administrativeArea');
     print(city);
     print('========================');
     print(countrS);
     emit(AladanPrayerTimeLoadingState());
 
-    DateModel? dateModel;
     await DioHelper.getData(
       url: 'v1/timingsByCity',
       query: {
@@ -127,22 +124,22 @@ class AlahdanCubit extends Cubit<AlahdanStates> {
       emit(AladanPrayerTimeSuccessState());
 
       prayerTimes = PrayerTimes.fromJson(value.data['data']['timings']);
-      xxxx = cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Fajr', value: value.data['data']['timings']['Fajr']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Sunrise', value: value.data['data']['timings']['Sunrise']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Dhuhr', value: value.data['data']['timings']['Dhuhr']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Asr', value: value.data['data']['timings']['Asr']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Maghrib', value: value.data['data']['timings']['Maghrib']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Sunset', value: value.data['data']['timings']['Sunset']);
-      cachHelper.saveDate(
+      CachHelper.saveDate(
           key: 'Isha', value: value.data['data']['timings']['Isha']);
       Fluttertoast.showToast(
-        msg: 'تم تحديد الموقع على ${city}',
+        msg: 'تم تحديد الموقع على $city',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         // timeInSecForIosWeb: 1,

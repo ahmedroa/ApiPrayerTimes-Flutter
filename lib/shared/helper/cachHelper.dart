@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class cachHelper {
+class CachHelper {
   static SharedPreferences? sharedpreferences;
 
   static init() async {
