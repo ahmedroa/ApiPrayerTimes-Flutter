@@ -1,16 +1,5 @@
 # azan
 
 A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![photo_2023-06-29_03-19-31](https://github.com/ahmedroa/ApiPrayerTimes-Flutter/assets/105372011/80a6076e-12b5-4506-ba85-0da517556943)
+![photo_2023-06-29_03-19-31 (2)](https://github.com/ahmedroa/ApiPrayerTimes-Flutter/assets/105372011/e14f84fe-f6cc-4ee5-939e-4ae0a8945af9)
