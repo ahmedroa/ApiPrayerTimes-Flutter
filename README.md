@@ -1,5 +1,5 @@
 # azan
-Application to fetch prayer times through an api
+
 
 packages :
 -  flutter_bloc
